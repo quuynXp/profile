@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence, scroll } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -107,22 +107,22 @@ const ImageModal = ({
 // Personal photos for carousel
 const personalPhotos = [
   {
-    src: "/me1.jpg",
+    src: "/hoc-bong.jpg",
     alt: "Working at desk",
     caption: "Coding at my workspace",
   },
   {
-    src: "/me2.jpg",
+    src: "/linked.png",
     alt: "Tech presentation",
     caption: "Presenting at tech meetup",
   },
   {
-    src: "/me3.jpg",
+    src: "/github.png",
     alt: "Team collaboration",
     caption: "Team collaboration session",
   },
   {
-    src: "/me4.jpg",
+    src: "/nttu.webp",
     alt: "Learning and studying",
     caption: "Continuous learning",
   },
@@ -303,19 +303,41 @@ const workExperience = [
 const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null)
+  const [autoSlideInterval, setAutoSlideInterval] = useState<NodeJS.Timeout | null>(null)
 
-  const nextPhoto = () => {
-    setCurrentIndex((prev) => (prev + 1) % photos.length)
+  const startAutoSlide = () => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % photos.length)
+    }, 15000)
+    setAutoSlideInterval(interval)
   }
 
-  const prevPhoto = () => {
+  const stopAutoSlide = () => {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval)
+      setAutoSlideInterval(null)
+    }
+  }
+
+  const resetAutoSlide = () => {
+    stopAutoSlide()
+    startAutoSlide()
+  }
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % photos.length)
+    resetAutoSlide()
+  }
+
+  const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length)
+    resetAutoSlide()
   }
 
   useEffect(() => {
-    const interval = setInterval(nextPhoto, 4000)
-    return () => clearInterval(interval)
-  }, [])
+    startAutoSlide()
+    return () => stopAutoSlide()
+  }, [photos.length])
 
   return (
     <>
@@ -346,14 +368,14 @@ const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
         </AnimatePresence>
 
         <button
-          onClick={prevPhoto}
+          onClick={handlePrev}
           className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
 
         <button
-          onClick={nextPhoto}
+          onClick={handleNext}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
         >
           <ChevronRight className="w-4 h-4" />
@@ -363,7 +385,10 @@ const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
           {photos.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentIndex(index)}
+              onClick={() => {
+                setCurrentIndex(index)
+                resetAutoSlide()
+              }}
               className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? "bg-white" : "bg-white/50"}`}
             />
           ))}
@@ -460,7 +485,11 @@ export default function Portfolio() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
-            <motion.div className="text-2xl font-bold text-white" whileHover={{ scale: 1.05 }}>
+            <motion.div
+              className="text-2xl font-bold text-white cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
               TNQ
             </motion.div>
             <div className="hidden md:flex space-x-8">
@@ -468,9 +497,8 @@ export default function Portfolio() {
                 <motion.button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`text-sm font-medium transition-colors ${
-                    activeSection === section ? "text-purple-400" : "text-white/70 hover:text-white"
-                  }`}
+                  className={`text-sm font-medium transition-colors ${activeSection === section ? "text-purple-400" : "text-white/70 hover:text-white"
+                    }`}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -598,7 +626,7 @@ export default function Portfolio() {
               Personal <span className="text-purple-400">Gallery</span>
             </h2>
 
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <PhotoCarousel photos={personalPhotos} />
             </div>
           </motion.div>
