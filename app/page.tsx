@@ -225,31 +225,46 @@ const skillCategories = [
 
 const projects = [
   {
-    title: "Restaurant Web Application",
-    date: "February 2025",
-    image: "/korean.png",
-    demoImages: ["/restaurant.png", "/korean1.png", "/restaurant1.png"],
-    githubUrl: "https://github.com/quuynXp/Restaurant-Management-System",
+    title: "LinguaMonkey - Platform learning language online",
+    date: "Aug 2025",
+    image: "/icon_lingua.png",
+    demoImages: ["/create_room.jpg", "Progress_learn.jpg", "Writing_learn.jpg", "/Join_room_list.jpg"],
+    githubUrl: "https://github.com/quuynXp/LinguaMonkey",
     description:
-      "A comprehensive full-stack restaurant management system built with modern microservices architecture, featuring real-time order processing, inventory management, and customer engagement tools.",
+      "A full-stack AI-powered language learning application with real-time interaction, advanced progress tracking, and gamification features.",
     detailedDescription:
-      "This enterprise-level application demonstrates advanced backend development skills with Spring Boot microservices, event-driven architecture using Apache Kafka, and containerized deployment. The system handles high-concurrency scenarios with optimized database queries and implements robust security measures including JWT authentication and role-based access control.",
-    technologies: ["Spring Boot", "ReactJS", "MySQL", "Docker", "Kafka", "gRPC", "Redis", "JWT"],
+      "LinguaMonkey is a comprehensive language-learning platform combining a Spring Boot backend, React Native Expo frontend, and a Python FastAPI AI service. The system integrates speech-to-text via Whisper Transformer, AI feedback with OpenAI, and asynchronous communication using gRPC. Redis ensures high-performance caching, PostgreSQL provides structured persistence, and Cloudinary manages scalable media storage. Security is enforced with JWT authentication, role-based access control, and token-bucket rate limiting.",
+    technologies: [
+      "Spring Boot",
+      "React Native Expo",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "gRPC",
+      "FastAPI",
+      "OpenAI API",
+      "Whisper Transformer",
+      "Cloudinary",
+      "Firebase",
+      "Zustand",
+      "React query",
+      "RSA"
+    ],
     highlights: [
-      "Architected and developed a scalable microservices ecosystem with 8+ independent services",
-      "Implemented real-time order processing using Apache Kafka for event streaming",
-      "Built RESTful APIs and gRPC services for inter-service communication",
-      "Designed responsive React frontend with real-time updates using WebSocket connections",
-      "Integrated Redis caching layer reducing database queries by 60%",
-      "Deployed using Docker Compose with automated CI/CD pipeline",
-      "Achieved 99.9% uptime with comprehensive monitoring and logging",
-      "Implemented comprehensive unit and integration testing with 95% code coverage",
+      "Designed and implemented a scalable monolithic backend with modular architecture",
+      "Integrated AI-driven speech and text analysis using FastAPI + Whisper Transformer + OpenAI",
+      "Built secure JWT-based authentication with access/refresh tokens, revocation, and role-permission system",
+      "Implemented Redis caching layer to optimize performance and reduce database load",
+      "Developed real-time WebSocket chat with reactions, message history, and group conversations",
+      "Integrated Jitsi Meet for group video calls and collaborative learning sessions",
+      "Implemented gamification system with badges, leaderboards, EXP, and streak tracking",
+      "Deployed all services with Docker Compose for reproducible development environments"
     ],
     metrics: {
-      performance: "99.9% uptime",
-      coverage: "95% test coverage",
-      efficiency: "60% query reduction",
-    },
+      performance: "High concurrency support with Redis caching and async gRPC communication",
+      scalability: "Designed for 50+ database tables across multiple functional domains",
+      engagement: "Gamification features (EXP, streaks, leaderboards) increase retention",
+    }
   },
   {
     title: "Patient Management System",
@@ -278,14 +293,41 @@ const projects = [
       security: "HIPAA compliant",
     },
   },
+  {
+    title: "Restaurant Web Application",
+    date: "February 2025",
+    image: "/korean.png",
+    demoImages: ["/restaurant.png", "/korean1.png", "/restaurant1.png"],
+    githubUrl: "https://github.com/quuynXp/Restaurant-Management-System",
+    description:
+      "A comprehensive full-stack restaurant management system built with modern microservices architecture, featuring real-time order processing, inventory management, and customer engagement tools.",
+    detailedDescription:
+      "This enterprise-level application demonstrates advanced backend development skills with Spring Boot microservices, event-driven architecture using Apache Kafka, and containerized deployment. The system handles high-concurrency scenarios with optimized database queries and implements robust security measures including JWT authentication and role-based access control.",
+    technologies: ["Spring Boot", "ReactJS", "MySQL", "Docker", "Kafka", "gRPC", "Redis", "JWT"],
+    highlights: [
+      "Architected and developed a scalable microservices ecosystem with 8+ independent services",
+      "Implemented real-time order processing using Apache Kafka for event streaming",
+      "Built RESTful APIs and gRPC services for inter-service communication",
+      "Designed responsive React frontend with real-time updates using WebSocket connections",
+      "Integrated Redis caching layer reducing database queries by 60%",
+      "Deployed using Docker Compose with automated CI/CD pipeline",
+      "Achieved 99.9% uptime with comprehensive monitoring and logging",
+      "Implemented comprehensive unit and integration testing with 95% code coverage",
+    ],
+    metrics: {
+      performance: "99.9% uptime",
+      coverage: "95% test coverage",
+      efficiency: "60% query reduction",
+    },
+  }
 ]
 
 const workExperience = [
   {
     company: "CNPT Technology Company",
-    position: "Back-end Developer Intern",
-    period: "July 2024 - Present",
-    location: "Ho Chi Minh City",
+    position: "Back-end Developer",
+    period: "Jun - Sep 2025",
+    location: "Da Nang City",
     companyLogo: "/cnptlogo.png",
     companyImage: "/cnpt.png",
     responsibilities: [
