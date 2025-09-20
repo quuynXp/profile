@@ -318,8 +318,8 @@ const projects = [
     title: "LinguaMonkey - Platform learning language online",
     date: "Aug 2025",
     image: "/icon_lingua.png",
-    demoImages: ["/create_room.jpg", "/Progress_learn.jpg", "/Writing_learn.jpg", "/Join_room_list.jpg", "/lingua_extra1.jpg", "/lingua_extra2.jpg"],
-    demoVideo: "/lingua_demo.mp4",
+    demoImages: ["/create_room.jpg", "/Progress_learn.jpg", "/Writing_learn.jpg", "/Join_room_list.jpg", "/chat_setting.jpg"],
+    demoVideo: "https://drive.google.com/file/d/13PscLVp7tP3A5auJsVk1K55XBpBBjpCH/view?usp=drive_link",
     githubUrl: "https://github.com/quuynXp/LinguaMonkey",
     description:
       "A full-stack AI-powered language learning application with real-time interaction, advanced progress tracking, and gamification features.",
@@ -361,8 +361,8 @@ const projects = [
     title: "Patient Management System",
     date: "May 2025",
     image: "/patient1.png",
-    demoImages: ["/patient2.png", "/patient3.png", "/patient4.png", "/patient_extra1.png"],
-    demoVideo: "/patient_demo.mp4",
+    demoImages: ["/patient2.png", "/patient3.png", "/patient4.png", "/patient5.png"],
+    demoVideo: "/https://drive.google.com/file/d/13PscLVp7tP3A5auJsVk1K55XBpBBjpCH/view?usp=drive_link",
     githubUrl: "https://github.com/quuynXp/Patient-Management",
     description:
       "A sophisticated healthcare management platform built with microservices architecture, focusing on patient data security, appointment scheduling, and medical record management.",
@@ -389,9 +389,9 @@ const projects = [
     title: "Restaurant Web Application",
     date: "February 2025",
     image: "/korean.png",
-    demoImages: ["/restaurant.png", "/korean1.png", "/restaurant1.png", "/restaurant_extra1.png", "/restaurant_extra2.png"],
-    demoVideo: "/restaurant_demo.mp4",
-    githubUrl: "https://github.com/quuynXp/Restaurant-Management-System",
+    demoImages: ["/restaurant.png", "/korean1.png", "/restaurant1.png", "/restaurant2.png", "/restaurant3.png"],
+    demoVideo: "/https://drive.google.com/file/d/13PscLVp7tP3A5auJsVk1K55XBpBBjpCH/view?usp=drive_link",
+    githubUrl: "https://github.com/quuynXp/Restaurant_Korean",
     description:
       "A comprehensive full-stack restaurant management system built with modern microservices architecture, featuring real-time order processing, inventory management, and customer engagement tools.",
     detailedDescription:
@@ -406,6 +406,7 @@ const projects = [
       "Deployed using Docker Compose with automated CI/CD pipeline",
       "Achieved 99.9% uptime with comprehensive monitoring and logging",
       "Implemented comprehensive unit and integration testing with 95% code coverage",
+      "https://koreankuisine.vercel.app"
     ],
     metrics: {
       performance: "99.9% uptime",
@@ -421,8 +422,8 @@ const workExperience = [
     position: "Back-end Developer",
     period: "Jun - Sep 2025",
     location: "Da Nang City",
-    companyLogo: "/cnptlogo.png",
-    companyImages: ["/cnpt.png", "/cnpt_office1.jpg", "/cnpt_office2.jpg"],
+    companyLogo: "/cnpt_logo.png",
+    companyImages: ["/cnpt.png", "/cnpt_office1.png", "/cnpt_office2.png"],
     responsibilities: [
       "Designed and implemented core backend services: Evidence, Support, and Incident management systems using Spring Boot and PostgreSQL",
       "Built micro-service communication with Kafka (event-driven) and gRPC",
@@ -830,7 +831,7 @@ export default function Portfolio() {
                       <div className="text-sm text-purple-300">Nguyen Tat Thanh University, Ho Chi Minh City</div>
                       <div className="text-sm text-white/60">Expected Graduation: Feb 2026 — GPA: 8.0/10</div>
                       <div className="text-sm text-green-400 mt-2">
-                        🏆 Academic Encouragement Scholarship (2023, 2024)
+                        🏆 Academic Encouragement Scholarship (2022, 2023, 2024)
                       </div>
                     </div>
                   </CardContent>
