@@ -1,7 +1,7 @@
+import { useState, useEffect, useRef } from "react"
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence, scroll } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -28,6 +28,7 @@ import {
   ExternalLink,
   X,
   ZoomIn,
+  Play,
 } from "lucide-react"
 import Image from "next/image"
 
@@ -68,13 +69,30 @@ const TypewriterText = ({ text, delay = 50 }: { text: string; delay?: number }) 
   )
 }
 
-// Image Modal Component
+// Image Modal Component with Carousel
 const ImageModal = ({
-  src,
+  images,
+  initialIndex,
   alt,
   isOpen,
   onClose,
-}: { src: string; alt: string; isOpen: boolean; onClose: () => void }) => {
+}: {
+  images: string[]
+  initialIndex: number
+  alt: string
+  isOpen: boolean
+  onClose: () => void
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex)
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length)
+  }
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
+  }
+
   if (!isOpen) return null
 
   return (
@@ -98,7 +116,79 @@ const ImageModal = ({
         >
           <X className="w-6 h-6" />
         </button>
-        <Image src={src || "/placeholder.svg"} alt={alt} fill className="object-contain rounded-lg" />
+        <button
+          onClick={handlePrev}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.3 }}
+            className="relative w-full h-full"
+          >
+            <Image
+              src={images[currentIndex] || "/placeholder.svg"}
+              alt={`${alt} ${currentIndex + 1}`}
+              fill
+              className="object-contain rounded-lg"
+            />
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// Video Modal Component
+const VideoModal = ({
+  src,
+  isOpen,
+  onClose,
+}: {
+  src: string
+  isOpen: boolean
+  onClose: () => void
+}) => {
+  if (!isOpen) return null
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        className="relative max-w-4xl max-h-[90vh] w-full h-full"
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.8 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+        >
+          <X className="w-6 h-6" />
+        </button>
+        <video
+          className="w-full h-full object-contain rounded-lg"
+          src={src}
+          controls
+          autoPlay
+        />
       </motion.div>
     </motion.div>
   )
@@ -228,7 +318,8 @@ const projects = [
     title: "LinguaMonkey - Platform learning language online",
     date: "Aug 2025",
     image: "/icon_lingua.png",
-    demoImages: ["/create_room.jpg", "Progress_learn.jpg", "Writing_learn.jpg", "/Join_room_list.jpg"],
+    demoImages: ["/create_room.jpg", "/Progress_learn.jpg", "/Writing_learn.jpg", "/Join_room_list.jpg", "/lingua_extra1.jpg", "/lingua_extra2.jpg"],
+    demoVideo: "/lingua_demo.mp4",
     githubUrl: "https://github.com/quuynXp/LinguaMonkey",
     description:
       "A full-stack AI-powered language learning application with real-time interaction, advanced progress tracking, and gamification features.",
@@ -270,8 +361,9 @@ const projects = [
     title: "Patient Management System",
     date: "May 2025",
     image: "/patient1.png",
-    demoImages: ["/patient2.png", "/patient3.png", "/patient4.png"],
-    githubUrl: "https://github.com/quuynXp/Patient-Management-System",
+    demoImages: ["/patient2.png", "/patient3.png", "/patient4.png", "/patient_extra1.png"],
+    demoVideo: "/patient_demo.mp4",
+    githubUrl: "https://github.com/quuynXp/Patient-Management",
     description:
       "A sophisticated healthcare management platform built with microservices architecture, focusing on patient data security, appointment scheduling, and medical record management.",
     detailedDescription:
@@ -297,7 +389,8 @@ const projects = [
     title: "Restaurant Web Application",
     date: "February 2025",
     image: "/korean.png",
-    demoImages: ["/restaurant.png", "/korean1.png", "/restaurant1.png"],
+    demoImages: ["/restaurant.png", "/korean1.png", "/restaurant1.png", "/restaurant_extra1.png", "/restaurant_extra2.png"],
+    demoVideo: "/restaurant_demo.mp4",
     githubUrl: "https://github.com/quuynXp/Restaurant-Management-System",
     description:
       "A comprehensive full-stack restaurant management system built with modern microservices architecture, featuring real-time order processing, inventory management, and customer engagement tools.",
@@ -329,7 +422,7 @@ const workExperience = [
     period: "Jun - Sep 2025",
     location: "Da Nang City",
     companyLogo: "/cnptlogo.png",
-    companyImage: "/cnpt.png",
+    companyImages: ["/cnpt.png", "/cnpt_office1.jpg", "/cnpt_office2.jpg"],
     responsibilities: [
       "Designed and implemented core backend services: Evidence, Support, and Incident management systems using Spring Boot and PostgreSQL",
       "Built micro-service communication with Kafka (event-driven) and gRPC",
@@ -440,7 +533,8 @@ const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
       <AnimatePresence>
         {modalImage && (
           <ImageModal
-            src={modalImage.src || "/placeholder.svg"}
+            images={[modalImage.src]}
+            initialIndex={0}
             alt={modalImage.alt}
             isOpen={!!modalImage}
             onClose={() => setModalImage(null)}
@@ -454,13 +548,17 @@ const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero")
   const [isLoaded, setIsLoaded] = useState(false)
-  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null)
+  const [modalImage, setModalImage] = useState<{
+    images: string[]
+    index: number
+    alt: string
+  } | null>(null)
+  const [modalVideo, setModalVideo] = useState<string | null>(null)
 
   useEffect(() => {
     setIsLoaded(true)
   }, [])
 
-  // Scroll detection for navbar
   useEffect(() => {
     const handleScroll = () => {
       const sections = ["hero", "gallery", "about", "experience", "skills", "projects", "contact"]
@@ -493,7 +591,6 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-x-hidden">
-      {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -inset-10 opacity-50">
           {[...Array(50)].map((_, i) => (
@@ -518,7 +615,6 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* Navigation */}
       <motion.nav
         className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10"
         initial={{ y: -100 }}
@@ -539,8 +635,7 @@ export default function Portfolio() {
                 <motion.button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className={`text-sm font-medium transition-colors ${activeSection === section ? "text-purple-400" : "text-white/70 hover:text-white"
-                    }`}
+                  className={`text-sm font-medium transition-colors ${activeSection === section ? "text-purple-400" : "text-white/70 hover:text-white"}`}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -552,7 +647,6 @@ export default function Portfolio() {
         </div>
       </motion.nav>
 
-      {/* Hero Section */}
       <section id="hero" className="min-h-screen flex items-center justify-center relative pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -655,7 +749,6 @@ export default function Portfolio() {
         </motion.div>
       </section>
 
-      {/* Gallery Section */}
       <section id="gallery" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -675,7 +768,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* About Section */}
       <section id="about" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -738,7 +830,7 @@ export default function Portfolio() {
                       <div className="text-sm text-purple-300">Nguyen Tat Thanh University, Ho Chi Minh City</div>
                       <div className="text-sm text-white/60">Expected Graduation: Feb 2026 — GPA: 8.0/10</div>
                       <div className="text-sm text-green-400 mt-2">
-                        🏆 Academic Encouragement Scholarship (2022, 2023, 2024)
+                        🏆 Academic Encouragement Scholarship (2023, 2024)
                       </div>
                     </div>
                   </CardContent>
@@ -772,7 +864,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Experience Section */}
       <section id="experience" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -826,18 +917,22 @@ export default function Portfolio() {
                         </div>
                       </div>
                       <div className="md:col-span-1">
-                        <div className="w-full h-48 rounded-lg overflow-hidden group relative">
-                          <Image
-                            src={job.companyImage || "/placeholder.svg"}
-                            alt={`${job.company} office`}
-                            width={400}
-                            height={200}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                            onClick={() => setModalImage({ src: job.companyImage, alt: `${job.company} office` })}
-                          />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center pointer-events-none">
-                            <ZoomIn className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          {job.companyImages.map((img, idx) => (
+                            <div key={idx} className="w-full h-24 rounded-lg overflow-hidden group relative">
+                              <Image
+                                src={img || "/placeholder.svg"}
+                                alt={`${job.company} image ${idx + 1}`}
+                                width={200}
+                                height={100}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                                onClick={() => setModalImage({ images: job.companyImages, index: idx, alt: `${job.company} office` })}
+                              />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                <ZoomIn className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -865,7 +960,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Skills Section */}
       <section id="skills" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -919,7 +1013,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Projects Section */}
       <section id="projects" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -997,43 +1090,58 @@ export default function Portfolio() {
                             ))}
                           </div>
 
-                          <Button
-                            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
-                            onClick={() => window.open(project.githubUrl, "_blank")}
-                          >
-                            <Github className="w-4 h-4 mr-2" />
-                            View on GitHub
-                            <ExternalLink className="w-4 h-4 ml-2" />
-                          </Button>
+                          <div className="flex gap-4">
+                            <Button
+                              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                              onClick={() => window.open(project.githubUrl, "_blank")}
+                            >
+                              <Github className="w-4 h-4 mr-2" />
+                              View on GitHub
+                              <ExternalLink className="w-4 h-4 ml-2" />
+                            </Button>
+                            <Button
+                              className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+                              onClick={() => setModalVideo(project.demoVideo)}
+                            >
+                              <Play className="w-4 h-4 mr-2" />
+                              View Demo
+                            </Button>
+                          </div>
                         </div>
 
                         <div className="space-y-4">
-                          <div className="w-full h-64 rounded-lg overflow-hidden group">
+                          <div className="relative w-full h-64 rounded-lg overflow-hidden group">
                             <Image
                               src={project.image || "/placeholder.svg"}
                               alt={`${project.title} main interface`}
                               width={500}
                               height={300}
                               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                              onClick={() =>
-                                setModalImage({ src: project.image, alt: `${project.title} main interface` })
-                              }
+                              onClick={() => setModalImage({
+                                images: [project.image, ...project.demoImages],
+                                index: 0,
+                                alt: `${project.title} interface`
+                              })}
                             />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center pointer-events-none">
                               <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-3 gap-2">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                             {project.demoImages.map((img, idx) => (
                               <div key={idx} className="w-full h-20 rounded-lg overflow-hidden group relative">
                                 <Image
                                   src={img || "/placeholder.svg"}
                                   alt={`${project.title} demo ${idx + 1}`}
-                                  width={350}
-                                  height={200}
+                                  width={200}
+                                  height={100}
                                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 cursor-pointer"
-                                  onClick={() => setModalImage({ src: img, alt: `${project.title} demo ${idx + 1}` })}
+                                  onClick={() => setModalImage({
+                                    images: [project.image, ...project.demoImages],
+                                    index: idx + 1,
+                                    alt: `${project.title} interface`
+                                  })}
                                 />
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center pointer-events-none">
                                   <ZoomIn className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -1052,7 +1160,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -1095,7 +1202,6 @@ export default function Portfolio() {
                       </div>
 
                       <Separator className="my-6 bg-white/10" />
-
                       <h4 className="text-lg font-semibold text-white mb-4">Connect With Me</h4>
                       <div className="flex space-x-4">
                         <motion.a
@@ -1168,7 +1274,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="py-8 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-white/60">
@@ -1178,14 +1283,21 @@ export default function Portfolio() {
         </div>
       </footer>
 
-      {/* Image Modal */}
       <AnimatePresence>
         {modalImage && (
           <ImageModal
-            src={modalImage.src || "/placeholder.svg"}
+            images={modalImage.images}
+            initialIndex={modalImage.index}
             alt={modalImage.alt}
             isOpen={!!modalImage}
             onClose={() => setModalImage(null)}
+          />
+        )}
+        {modalVideo && (
+          <VideoModal
+            src={modalVideo}
+            isOpen={!!modalVideo}
+            onClose={() => setModalVideo(null)}
           />
         )}
       </AnimatePresence>
