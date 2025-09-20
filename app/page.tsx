@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react"
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence, HTMLMotionProps } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -362,7 +362,7 @@ const projects = [
     date: "May 2025",
     image: "/patient1.png",
     demoImages: ["/patient2.png", "/patient3.png", "/patient4.png", "/patient5.png"],
-    demoVideo: "/https://drive.google.com/file/d/13PscLVp7tP3A5auJsVk1K55XBpBBjpCH/view?usp=drive_link",
+    demoVideo: "https://drive.google.com/file/d/13PscLVp7tP3A5auJsVk1K55XBpBBjpCH/view?usp=drive_link",
     githubUrl: "https://github.com/quuynXp/Patient-Management",
     description:
       "A sophisticated healthcare management platform built with microservices architecture, focusing on patient data security, appointment scheduling, and medical record management.",
@@ -390,7 +390,7 @@ const projects = [
     date: "February 2025",
     image: "/korean.png",
     demoImages: ["/restaurant.png", "/korean1.png", "/restaurant1.png", "/restaurant2.png", "/restaurant3.png"],
-    demoVideo: "/https://drive.google.com/file/d/13PscLVp7tP3A5auJsVk1K55XBpBBjpCH/view?usp=drive_link",
+    demoVideo: "https://drive.google.com/file/d/13PscLVp7tP3A5auJsVk1K55XBpBBjpCH/view?usp=drive_link",
     githubUrl: "https://github.com/quuynXp/Restaurant_Korean",
     description:
       "A comprehensive full-stack restaurant management system built with modern microservices architecture, featuring real-time order processing, inventory management, and customer engagement tools.",
@@ -831,7 +831,7 @@ export default function Portfolio() {
                       <div className="text-sm text-purple-300">Nguyen Tat Thanh University, Ho Chi Minh City</div>
                       <div className="text-sm text-white/60">Expected Graduation: Feb 2026 — GPA: 8.0/10</div>
                       <div className="text-sm text-green-400 mt-2">
-                        🏆 Academic Encouragement Scholarship (2022, 2023, 2024)
+                        🏆 Academic Encouragement Scholarship (2023, 2024)
                       </div>
                     </div>
                   </CardContent>
