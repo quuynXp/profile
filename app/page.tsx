@@ -266,7 +266,7 @@ const skillCategories = [
     color: "bg-green-500",
   },
   {
-    title: "Databases",
+    title: "Databases & Storage engines",
     icon: <Database className="w-5 h-5" />,
     skills: [
       {
@@ -413,6 +413,58 @@ const projects = [
       coverage: "95% test coverage",
       efficiency: "60% query reduction",
     },
+  },
+  {
+    title: "Employee Management System",
+    date: "Jan 2024",
+    image: "/placeholder.svg",
+    demoImages: [],
+    demoVideo: "",
+    githubUrl: "https://github.com/quuynXp/Employee-Management.git",
+    description: "A desktop application built with Java Swing following the MVC architecture. The system supports full CRUD operations for employees, salary calculation, and data import/export from Excel files.",
+    detailedDescription: "Desktop app for employee management with MVC architecture, supporting CRUD, salary calculation, and Excel integration.",
+    technologies: ["Java Swing", "MVC", "JDBC", "MySQL", "Apache POI", "Maven"],
+    highlights: ["Add, update, delete, search employees", "Calculate monthly salary", "Import/export from Excel", "Uses MySQL database"],
+    metrics: {}
+  },
+  {
+    title: "Spam Email Classification",
+    date: "Mar 2025",
+    image: "/placeholder.svg",
+    demoImages: [],
+    demoVideo: "",
+    githubUrl: "https://github.com/quuynXp/Spam-email-classification",
+    description: "A machine learning project to classify emails as spam or non-spam using text mining techniques in WEKA. Evaluates C4.5 (J48) and Naive Bayes on 5,180 emails.",
+    detailedDescription: "ML-based spam classification using WEKA, with J48 and Naive Bayes algorithms on preprocessed email dataset.",
+    technologies: ["WEKA", "J48", "Naive Bayes", "Text Mining"],
+    highlights: ["98% accuracy with full dataset", "Evaluated with percentage splits", "Text preprocessing to ARFF", "Competitive results across algorithms"],
+    metrics: {accuracy: "Up to 98%"}
+  },
+  {
+    title: "Hako – Shop Management System",
+    date: "Apr 2025",
+    image: "/placeholder.svg",
+    demoImages: [],
+    demoVideo: "",
+    githubUrl: "https://github.com/HakoTeam/hako-app",
+    description: "A modern shop management platform built with Spring Boot for managing employees, customers, inventory, invoicing, analytics, and support.",
+    detailedDescription: "End-to-end shop management with RBAC, multi-store support, inventory tracking, sales analytics, and REST API.",
+    technologies: ["Spring Boot", "PostgreSQL", "Spring Security", "Apache POI", "Swagger"],
+    highlights: ["Employee & role management", "Inventory & product management", "Analytics & reports", "Customer support chatbox"],
+    metrics: {}
+  },
+  {
+    title: "WebFashion - Fashion Web Application",
+    date: "Jun 2025",
+    image: "/placeholder.svg",
+    demoImages: ["/web_fashion1.png", "/web_fashion2.png", "/web_fashion3.png" ],
+    demoVideo: "",
+    githubUrl: "https://github.com/quuynXp/Web_Fashion",
+    description: "Web application for fashion stores using ASP.NET MVC with VNPay QR payment integration.",
+    detailedDescription: "E-commerce site with product management, cart, orders, users, and sandbox payment.",
+    technologies: ["ASP.NET MVC", "Entity Framework", "SQL Server", "VNPay", "Bootstrap"],
+    highlights: ["Product management", "Shopping cart & orders", "Online payment via VNPay QR", "User management"],
+    metrics: {}
   }
 ]
 
@@ -438,7 +490,6 @@ const workExperience = [
 
 const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null)
   const [autoSlideInterval, setAutoSlideInterval] = useState<NodeJS.Timeout | null>(null)
 
   const startAutoSlide = () => {
@@ -486,7 +537,7 @@ const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
             exit={{ opacity: 0, x: -300 }}
             transition={{ duration: 0.5 }}
             className="absolute inset-0 cursor-pointer group"
-            onClick={() => setModalImage({ src: photos[currentIndex].src, alt: photos[currentIndex].alt })}
+            onClick={() => setModalImage({ images: photos.map(photo => photo.src), index: currentIndex, alt: photos[currentIndex].alt })}
           >
             <Image
               src={photos[currentIndex].src || "/placeholder.svg"}
@@ -530,18 +581,6 @@ const PhotoCarousel = ({ photos }: { photos: typeof personalPhotos }) => {
           ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {modalImage && (
-          <ImageModal
-            images={[modalImage.src]}
-            initialIndex={0}
-            alt={modalImage.alt}
-            isOpen={!!modalImage}
-            onClose={() => setModalImage(null)}
-          />
-        )}
-      </AnimatePresence>
     </>
   )
 }
@@ -801,7 +840,7 @@ export default function Portfolio() {
                     </p>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center p-4 bg-purple-500/20 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-400">2+</div>
+                        <div className="text-2xl font-bold text-purple-400">1</div>
                         <div className="text-sm text-white/70">Years Experience</div>
                       </div>
                       <div className="text-center p-4 bg-purple-500/20 rounded-lg">
