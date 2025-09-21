@@ -420,7 +420,7 @@ const projects = [
     image: "/placeholder.svg",
     demoImages: [],
     demoVideo: "",
-    githubUrl: "https://github.com/quuynXp/Employee-Management.git",
+    githubUrl: "https://github.com/quuynXp/Employee-Management",
     description: "A desktop application built with Java Swing following the MVC architecture. The system supports full CRUD operations for employees, salary calculation, and data import/export from Excel files.",
     detailedDescription: "Desktop app for employee management with MVC architecture, supporting CRUD, salary calculation, and Excel integration.",
     technologies: ["Java Swing", "MVC", "JDBC", "MySQL", "Apache POI", "Maven"],
