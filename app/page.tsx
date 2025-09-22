@@ -700,7 +700,7 @@ export default function Portfolio() {
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-1">
                   <div className="w-full h-full rounded-full overflow-hidden bg-slate-900">
                     <Image
-                      src="/profile-photo.jpg"
+                      src="/anh_the.jpg"
                       alt="Thai Ngoc Quyen"
                       width={192}
                       height={192}
@@ -758,8 +758,8 @@ export default function Portfolio() {
                 className="border-green-400 text-green-400 hover:bg-green-400 hover:text-white px-8 py-3 bg-transparent"
                 onClick={() => {
                   const link = document.createElement("a")
-                  link.href = "/ThaiNgocQuyen_CV.pdf"
-                  link.download = "Thai_Ngoc_Quyen_CV.pdf"
+                  link.href = "/ThaiNgocQuyen_Resume.pdf"
+                  link.download = "ThaiNgocQuyen_Resume.pdf"
                   document.body.appendChild(link)
                   link.click()
                   document.body.removeChild(link)
